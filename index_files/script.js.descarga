@@ -1,0 +1,27 @@
+/**
+ * Ejemplo 4 de html2canvas para convertir el HTML de una web
+ * a un elemento canvas - Descargar la captura como imagen PNG
+ * 
+ * @author parzibyte
+ */
+const $boton = document.querySelector("#btnCapturar");
+const $objetivo = document.body;
+
+$boton.addEventListener("click", () => {
+  const opciones = {
+    ignoreElements: elemento => {
+      const tipo = elemento.nodeName.toLowerCase();
+      if (tipo === "button" || tipo === "input") {
+        return true;
+      }
+      return false
+    }
+  };
+  html2canvas($objetivo, opciones)
+    .then(canvas => {
+      let enlace = document.createElement('a');
+      enlace.download = "Image";
+      enlace.href = canvas.toDataURL();
+      enlace.click();
+    });
+});
